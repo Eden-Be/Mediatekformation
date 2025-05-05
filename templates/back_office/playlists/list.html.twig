@@ -1,0 +1,96 @@
+{% extends 'back_office/base.html.twig' %}
+
+{% block title %}Gestion des playlists{% endblock %}
+
+{% block body %}
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Playlists</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{{ path('admin_dashboard') }}">Tableau de bord</a></li>
+            <li class="breadcrumb-item active">Playlists</li>
+        </ol>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fas fa-list me-1"></i>
+                    Liste des playlists
+                </div>
+                <a href="{{ path('admin_playlist_new') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus me-1"></i> Nouvelle playlist
+                </a>
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Nombre de formations</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for playlist in playlists %}
+                        <tr>
+                            <td>{{ playlist.id }}</td>
+                            <td>{{ playlist.name }}</td>
+                            <td>{{ playlist.description|striptags|length > 100 ? playlist.description|striptags|slice(0, 100) ~ '...' : playlist.description|striptags }}</td>
+                            <td>{{ playlist.formations|length }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <a href="{{ path('admin_playlist_edit', {id: playlist.id}) }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ playlist.id }}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Modal de confirmation de suppression -->
+                                <div class="modal fade" id="deleteModal{{ playlist.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ playlist.id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalLabel{{ playlist.id }}">Confirmer la suppression</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Êtes-vous sûr de vouloir supprimer la playlist "{{ playlist.name }}" ?
+                                                {% if playlist.formations|length > 0 %}
+                                                    <div class="alert alert-warning mt-3">
+                                                        <i class="fas fa-exclamation-triangle me-1"></i> Attention : cette playlist contient {{ playlist.formations|length }} formation(s).
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                <form action="{{ path('admin_playlist_delete', {id: playlist.id}) }}" method="post" style="display: inline-block;">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ playlist.id) }}">
+                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center">Aucune playlist trouvée</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

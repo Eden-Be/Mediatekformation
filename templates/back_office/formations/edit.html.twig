@@ -1,0 +1,62 @@
+{% extends 'back_office/base.html.twig' %}
+
+{% block title %}Modifier une formation{% endblock %}
+
+{% block body %}
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Modifier une formation</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{{ path('admin_dashboard') }}">Tableau de bord</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('admin_formations_list') }}">Formations</a></li>
+            <li class="breadcrumb-item active">Modifier</li>
+        </ol>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-edit me-1"></i>
+                Modifier la formation
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+                <div class="mb-3">
+                    {{ form_label(form.title, 'Titre', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+                    {{ form_errors(form.description) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.videoId, 'ID Vidéo', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.videoId, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.videoId) }}
+                    <div class="form-text">L'identifiant YouTube de la vidéo (ex: dQw4w9WgXcQ)</div>
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.publishedAt, 'Date de publication', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.publishedAt) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.categories, 'Catégories', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.categories, {'attr': {'class': 'form-select', 'multiple': 'multiple'}}) }}
+                    {{ form_errors(form.categories) }}
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="{{ path('admin_formations_list') }}" class="btn btn-secondary">Retour à la liste</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i> Enregistrer
+                    </button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
