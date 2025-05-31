@@ -100,12 +100,22 @@ class Playlist
         $categories = new ArrayCollection();
         foreach($this->formations as $formation){
             $categoriesFormation = $formation->getCategories();
-            foreach($categoriesFormation as $categorieFormation)
+            foreach($categoriesFormation as $categorieFormation){
             if(!$categories->contains($categorieFormation->getName())){
                 $categories[] = $categorieFormation->getName();
+            }
             }
         }
         return $categories;
     }
+    
+      /**
+     * Retourne le nombre de formations associées à cette playlist
+     */
+    public function getNbFormations(): int
+    {
+        return $this->formations->count();
+    }
+
         
 }

@@ -56,19 +56,25 @@ class PlaylistsController extends AbstractController {
         ]);
     }
 
-    #[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
-    public function sort($champ, $ordre): Response{
-        switch($champ){
-            case "name":
-                $playlists = $this->playlistRepository->findAllOrderByName($ordre);
-                break;
-        }
-        $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
-            'playlists' => $playlists,
-            'categories' => $categories            
-        ]);
-    }          
+#[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
+public function sort(string $champ, string $ordre): Response {
+    if ($champ === 'nbformations') {
+        $playlists = $this->playlistRepository->findAllOrderByNbFormations($ordre);
+    } elseif ($champ === 'name') {
+        $playlists = $this->playlistRepository->findAllOrderByName($ordre);
+    } else {
+        // fallback générique ou tri non reconnu
+        $playlists = $this->playlistRepository->findAll();
+    }
+
+    $categories = $this->categorieRepository->findAll();
+
+    return $this->render("pages/playlists.html.twig", [
+        'playlists' => $playlists,
+        'categories' => $categories
+    ]);
+}
+          
 
     #[Route('/playlists/recherche/{champ}/{table}', name: 'playlists.findallcontain')]
     public function findAllContain($champ, Request $request, $table=""): Response{
