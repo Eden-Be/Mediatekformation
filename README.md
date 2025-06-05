@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Mediatekformation
 ## Présentation
 Ce site, développé avec Symfony 6.4, permet d'accéder aux vidéos d'auto-formation proposées par une chaîne de médiathèques et qui sont aussi accessibles sur YouTube.<br> 
@@ -88,3 +89,6 @@ Le chemin des images (des 2 tailles) n'est pas mémorisé dans la BDD car il peu
 =======
 # Mediatekformation
 >>>>>>> c7878e6e1446bf073eba34296fc8f0b712017241
+=======
+# Mediatekformation
+>>>>>>> 88e046bd18fcf2353316510c3fd26b16c70fda79
