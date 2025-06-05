@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration - Modifier une formation{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Ajouter une formation</h1>
+
+        <div class="mb-3">
+            <a href="{{ path('admin.formations') }}" class="btn btn-secondary">Retour à la liste</a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+                <div class="mb-3">
+                    {{ form_label(form.title, 'Titre', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.title) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.description) }}
+                    {{ form_errors(form.description) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.videoId, 'ID Vidéo', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.videoId) }}
+                    {{ form_errors(form.videoId) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.publishedAt, 'Date de publication', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.publishedAt) }}
+                    {{ form_errors(form.publishedAt) }}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Modifier</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

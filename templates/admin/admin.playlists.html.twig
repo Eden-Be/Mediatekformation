@@ -1,0 +1,46 @@
+{%  extends "baseadmin.html.twig" %}
+
+{% block body %}
+    <p class ="text-end">
+        <div class =""d-flex justify-content-between align-items-center mb-4">
+        <a href="{{ path('admin.playlist.ajout') }}" class="btn btn-success mb-3">➕ Ajouter une playlist</a>
+    </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Nb formations
+                    </th>
+                    <th>
+                        playlist
+                    </th>
+                    <th>
+                        catégories
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for playlist in playlists %}
+                    <tr>
+                        <td>
+                            {{ playlist.nbFormations }}
+                        </td>
+                        <td>
+                            <h5 class ="text-info">
+                                {{ playlist.name }}
+                            </h5>
+                        </td>
+                         <td>
+                             <a href ="{{ path('admin.playlist.edit', {id:playlist.id}) }}" class ="btn btn-secondary">Editer</a>
+<form method="post" action="{{ path('admin.playlist.delete', {id: playlist.id}) }}" style="display:inline" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer {{ playlist.name }} ?')">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ playlist.id) }}">
+    <button class="btn btn-danger">Supprimer</button>
+</form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
+            
+
